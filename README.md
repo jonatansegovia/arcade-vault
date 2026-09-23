@@ -11,6 +11,13 @@ https://github.com/Klerith/fernando-skills
 
 ## Skills usadas
 
+## Commands
+
 ```bash
-npx skills@latest add Klerith/fernando-skills
+npm run dev     # start dev server (localhost:3000)
+npm run build   # production build
+npm run start   # serve production build
+npm run lint    # eslint (flat config, eslint-config-next)
 ```
+
+No test runner is configured yet.
