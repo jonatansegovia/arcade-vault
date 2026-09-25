@@ -1,0 +1,137 @@
+.hero {
+  padding: 64px 32px 32px;
+  max-width: 1320px;
+  margin: 0 auto;
+  text-align: center;
+}
+.hero h1 {
+  font-family: var(--pixel);
+  font-size: clamp(28px, 6vw, 64px);
+  letter-spacing: 0.06em;
+  margin: 0;
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    var(--cyan) 60%,
+    var(--magenta) 110%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 12px rgba(0, 245, 255, 0.4));
+}
+.sub {
+  margin-top: 18px;
+  font-family: var(--pixel);
+  font-size: clamp(10px, 1.6vw, 14px);
+  letter-spacing: 0.2em;
+  color: var(--yellow);
+}
+.blink {
+  animation: blink 1.2s steps(1, end) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  max-width: 1320px;
+  margin: 32px auto 0;
+  padding: 0 32px;
+  flex-wrap: wrap;
+}
+.search {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  height: 48px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  font-family: var(--mono);
+  position: relative;
+}
+.search:focus-within {
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.35);
+}
+.search input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.search input::placeholder {
+  color: var(--ink-faint);
+}
+.ico {
+  color: var(--cyan);
+  font-family: var(--pixel);
+  font-size: 11px;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.chip {
+  padding: 12px 14px;
+  font-family: var(--pixel);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  color: var(--ink-dim);
+  cursor: pointer;
+}
+.chip.active {
+  color: var(--magenta);
+  border-color: var(--magenta);
+  box-shadow: 0 0 10px rgba(255, 0, 110, 0.35);
+}
+.chip:hover:not(.active) {
+  color: var(--ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+  max-width: 1320px;
+  margin: 32px auto 80px;
+  padding: 0 32px;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px;
+  color: var(--ink-faint);
+}
+.emptyTitle {
+  font-size: 14px;
+  color: var(--magenta);
+  margin-bottom: 12px;
+}
+
+@media (max-width: 720px) {
+  .grid {
+    padding: 0 16px;
+  }
+  .hero {
+    padding: 36px 16px 16px;
+  }
+  .filters {
+    padding: 0 16px;
+  }
+}
