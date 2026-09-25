@@ -1,0 +1,323 @@
+.player {
+  max-width: 1100px;
+  margin: 32px auto;
+  padding: 0 24px 64px;
+}
+.hud {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.hudStats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.hudStat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hudLabel {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.hudValue {
+  font-family: var(--pixel);
+  font-size: 16px;
+  color: var(--cyan);
+  text-shadow: 0 0 6px rgba(0, 245, 255, 0.5);
+}
+.hudValueLives {
+  font-family: var(--pixel);
+  font-size: 16px;
+  color: var(--magenta);
+  text-shadow: 0 0 6px rgba(255, 0, 110, 0.5);
+}
+.hudValueLevel {
+  font-family: var(--pixel);
+  font-size: 16px;
+  color: var(--yellow);
+  text-shadow: 0 0 6px rgba(245, 255, 0, 0.5);
+}
+.hudActions {
+  display: flex;
+  gap: 10px;
+}
+
+.crt {
+  position: relative;
+  border-radius: 28px;
+  background: #050507;
+  padding: 24px;
+  box-shadow:
+    0 0 0 6px #1b1b22,
+    0 0 0 7px #2a2a35,
+    0 30px 80px -20px rgba(0, 245, 255, 0.35);
+  overflow: hidden;
+}
+.crt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 80% at 50% 30%,
+    rgba(0, 245, 255, 0.05),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+.crtScreen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #000;
+  border-radius: 12px / 28px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 60px rgba(0, 0, 0, 0.9),
+    inset 0 0 20px rgba(0, 245, 255, 0.15);
+}
+.crtScreen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.18) 0 2px,
+    transparent 2px 4px
+  );
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.crtScreen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 90% at 50% 50%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.65)
+  );
+  pointer-events: none;
+}
+.crtContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan);
+  font-family: var(--pixel);
+  font-size: 12px;
+  text-align: center;
+}
+.crtBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding: 0 8px;
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: var(--ink-faint);
+  letter-spacing: 0.16em;
+}
+.led {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.led::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+}
+
+.arena {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, #0a0030 0%, #000 70%), #000;
+}
+.gridFloor {
+  position: absolute;
+  inset: 50% 0 0 0;
+  background:
+    linear-gradient(to right, rgba(0, 245, 255, 0.4) 1px, transparent 1px) 0
+      0/40px 40px,
+    linear-gradient(to bottom, rgba(0, 245, 255, 0.4) 1px, transparent 1px) 0
+      0/40px 40px;
+  transform: perspective(300px) rotateX(70deg);
+  transform-origin: top;
+  animation: gridscroll 4s linear infinite;
+  opacity: 0.7;
+}
+.playerShip {
+  position: absolute;
+  bottom: 14%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 22px solid var(--cyan);
+  filter: drop-shadow(0 0 8px var(--cyan));
+  transform: translateX(-50%);
+  animation: bob 2s ease-in-out infinite;
+}
+@keyframes bob {
+  50% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+}
+.enemy {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--magenta);
+  box-shadow: 0 0 8px var(--magenta);
+}
+.e1 {
+  top: 18%;
+  left: 22%;
+  animation: drift 3s ease-in-out infinite;
+}
+.e2 {
+  top: 26%;
+  left: 70%;
+  animation: drift 3.2s ease-in-out infinite reverse;
+}
+.e3 {
+  top: 14%;
+  left: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 8px var(--yellow);
+  animation: drift 2.8s ease-in-out infinite;
+}
+@keyframes drift {
+  50% {
+    transform: translate(20px, 10px);
+  }
+}
+
+/* modal (fin del juego) */
+.modalBd {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal {
+  width: min(480px, 96vw);
+  background: var(--bg-2);
+  border: 1px solid var(--magenta);
+  box-shadow:
+    0 0 30px rgba(255, 0, 110, 0.4),
+    inset 0 0 16px rgba(255, 0, 110, 0.18);
+  padding: 32px;
+  text-align: center;
+  position: relative;
+}
+.modal::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed rgba(255, 0, 110, 0.4);
+  pointer-events: none;
+}
+.modal h2 {
+  margin: 0 0 18px;
+  font-family: var(--pixel);
+  color: var(--magenta);
+  font-size: 22px;
+  text-shadow: 0 0 12px rgba(255, 0, 110, 0.7);
+  letter-spacing: 0.12em;
+}
+.finalLabel {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+.final {
+  font-family: var(--pixel);
+  font-size: 36px;
+  color: var(--yellow);
+  text-shadow: 0 0 16px rgba(245, 255, 0, 0.6);
+  margin: 16px 0 6px;
+}
+.inputRow {
+  display: flex;
+  gap: 8px;
+  margin: 22px 0 12px;
+}
+.inputRow input {
+  flex: 1;
+  height: 44px;
+  padding: 0 12px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  outline: 0;
+  font-family: var(--mono);
+}
+.inputRow input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.35);
+}
+.modalActions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.toastSaved {
+  font-family: var(--pixel);
+  font-size: 11px;
+  color: var(--green);
+  text-shadow: 0 0 8px var(--green);
+  margin-top: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  border-right: 2px solid var(--green);
+  animation:
+    typewriter 1.6s steps(22) forwards,
+    caret 0.8s steps(1) infinite;
+  width: 0;
+}
+@keyframes typewriter {
+  to {
+    width: 22ch;
+  }
+}
+@keyframes caret {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@media (max-width: 720px) {
+  .player {
+    padding: 0 16px 32px;
+  }
+}
