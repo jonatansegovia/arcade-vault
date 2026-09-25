@@ -40,7 +40,7 @@ export default function Home() {
             <button
               key={c}
               type="button"
-              className={`${styles.chip} ${cat === c ? styles.active : ""}`}
+              className={`chip ${cat === c ? "active" : ""}`}
               onClick={() => setCat(c)}
             >
               {c}
