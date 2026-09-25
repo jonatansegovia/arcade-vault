@@ -510,3 +510,31 @@ a {
 .chip:hover:not(.active) {
   color: var(--ink);
 }
+
+/* ===== screen transition helpers (shared across screens) ===== */
+.fade-in {
+  animation: fadeIn 240ms ease-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.slide-in {
+  animation: slideIn 260ms ease-out;
+}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
