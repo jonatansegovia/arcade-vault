@@ -100,7 +100,7 @@
   margin-left: 16px;
 }
 
-.hamburger {
+button.hamburger {
   display: none;
 }
 
@@ -114,7 +114,7 @@
   .coinCounter {
     display: none;
   }
-  .hamburger {
+  button.hamburger {
     display: inline-flex;
   }
 }
