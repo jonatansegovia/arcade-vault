@@ -9,7 +9,8 @@ export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const isBiblioteca = pathname === "/" || pathname.startsWith("/juegos");
+  const isHome = pathname === "/home";
+  const isBiblioteca = pathname.startsWith("/juegos");
   const isSalon = pathname === "/salon";
   const isLogin = pathname === "/login";
 
@@ -27,7 +28,13 @@ export default function Nav() {
 
         <div className={styles.links}>
           <Link
-            href="/"
+            href="/home"
+            className={`${styles.link} ${isHome ? styles.active : ""}`}
+          >
+            Inicio
+          </Link>
+          <Link
+            href="/juegos"
             className={`${styles.link} ${isBiblioteca ? styles.active : ""}`}
           >
             Biblioteca
@@ -72,7 +79,10 @@ export default function Nav() {
         >
           MENÚ
         </div>
-        <Link href="/" onClick={close} className={isBiblioteca ? styles.active : undefined}>
+        <Link href="/home" onClick={close} className={isHome ? styles.active : undefined}>
+          Inicio
+        </Link>
+        <Link href="/juegos" onClick={close} className={isBiblioteca ? styles.active : undefined}>
           Biblioteca
         </Link>
         <Link href="/salon" onClick={close} className={isSalon ? styles.active : undefined}>
