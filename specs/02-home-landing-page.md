@@ -1,6 +1,6 @@
 # SPEC 02 — Home (landing) y reorganización de rutas
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 01
 > **Date:** 2026-09-27
 > **Objective:** Integrar la página Home (landing) de Arcade Vault en `/home` a partir de `references/templates/home-about/home.jsx`, mover la Biblioteca actual de `/` a `/juegos`, y redirigir `/` a `/home`.
@@ -52,19 +52,19 @@ No se introducen estructuras de datos nuevas. Home reutiliza el tipo `Game` y el
 
 ## Acceptance criteria
 
-- [ ] `npm run build` termina sin errores.
-- [ ] Visitar `/` redirige a `/home`.
-- [ ] `/home` muestra el hero ("EL ARCADE CLÁSICO ESTÁ DE VUELTA"), los 4 feature cards, el mini-rail con 6 juegos del dataset real, el bloque de stats, la sección de precios con FAQ, y el CTA final.
-- [ ] El botón "Explorar juegos" del hero de Home navega a `/juegos`.
-- [ ] El botón "Crear cuenta" del hero de Home navega a `/login`.
-- [ ] Click en una mini-card de Home navega a `/juegos/[id]` con los datos de ese juego.
-- [ ] El botón "Ver todos los juegos" navega a `/juegos`.
-- [ ] El botón "Empezar gratis" de la sección de precios navega a `/login`.
-- [ ] El botón final "Insertar moneda" navega a `/juegos`.
-- [ ] `/juegos` muestra la Biblioteca (hero, buscador, chips, grid) exactamente igual que antes en `/`.
-- [ ] El Nav muestra "Inicio" activo en `/home` y "Biblioteca" activo en `/juegos` y `/juegos/[id]...`.
-- [ ] El Nav (desktop y panel móvil) no muestra ningún link a "Acerca de"/About.
-- [ ] Recargar `/home` y `/juegos` directamente (sin navegar desde otra ruta) los renderiza correctamente.
+- [x] `npm run build` termina sin errores.
+- [x] Visitar `/` redirige a `/home`.
+- [x] `/home` muestra el hero ("EL ARCADE CLÁSICO ESTÁ DE VUELTA"), los 4 feature cards, el mini-rail con 6 juegos del dataset real, el bloque de stats, la sección de precios con FAQ, y el CTA final.
+- [x] El botón "Explorar juegos" del hero de Home navega a `/juegos`.
+- [x] El botón "Crear cuenta" del hero de Home navega a `/login`.
+- [x] Click en una mini-card de Home navega a `/juegos/[id]` con los datos de ese juego.
+- [x] El botón "Ver todos los juegos" navega a `/juegos`.
+- [x] El botón "Empezar gratis" de la sección de precios navega a `/login`.
+- [x] El botón final "Insertar moneda" navega a `/juegos`.
+- [x] `/juegos` muestra la Biblioteca (hero, buscador, chips, grid) exactamente igual que antes en `/`.
+- [x] El Nav muestra "Inicio" activo en `/home` y "Biblioteca" activo en `/juegos` y `/juegos/[id]...`.
+- [x] El Nav (desktop y panel móvil) no muestra ningún link a "Acerca de"/About.
+- [x] Recargar `/home` y `/juegos` directamente (sin navegar desde otra ruta) los renderiza correctamente.
 
 ---
 
