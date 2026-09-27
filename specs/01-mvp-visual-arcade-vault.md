@@ -1,6 +1,6 @@
 # SPEC 01 — MVP visual de Arcade Vault
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** —
 > **Date:** 2026-09-24
 > **Objective:** Implementar, solo a nivel visual y con datos mock, las 5 pantallas de Arcade Vault (Biblioteca, Detalle, Reproductor, Login/Auth y Salón de la Fama) migrando el diseño de `references/templates/` a rutas reales de Next.js App Router con CSS Modules + Tailwind v4.
