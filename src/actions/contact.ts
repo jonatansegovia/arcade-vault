@@ -53,7 +53,8 @@ export async function sendContactMessage(
   } catch (err) {
     return {
       success: false,
-      error: err instanceof Error ? err.message : "No se pudo enviar el mensaje.",
+      error:
+        err instanceof Error ? err.message : "No se pudo enviar el mensaje.",
     };
   }
 }
