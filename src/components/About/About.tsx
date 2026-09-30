@@ -47,7 +47,15 @@ function HighlightIcon({ kind }: { kind: string }) {
     return (
       <svg className={styles.hlIcon} viewBox="0 0 16 16">
         <g fill={C}>
-          <rect x="1" y="2" width="14" height="12" fill="none" stroke={C} strokeWidth="1.4" />
+          <rect
+            x="1"
+            y="2"
+            width="14"
+            height="12"
+            fill="none"
+            stroke={C}
+            strokeWidth="1.4"
+          />
           <rect x="1" y="2" width="14" height="3" />
           <rect x="3" y="3" width="1" height="1" fill="#0a0a0f" />
           <rect x="5" y="3" width="1" height="1" fill="#0a0a0f" />
@@ -77,15 +85,20 @@ function HighlightIcon({ kind }: { kind: string }) {
 
 const HIGHLIGHTS = [
   { i: "HEART", t: "HECHO CON ❤️ PARA JUGADORES", c: "magenta" },
-  { i: "BROWSER", t: "JUEGOS EN HTML — CORREN EN CUALQUIER NAVEGADOR", c: "cyan" },
+  {
+    i: "BROWSER",
+    t: "JUEGOS EN HTML — CORREN EN CUALQUIER NAVEGADOR",
+    c: "cyan",
+  },
   { i: "PLANT", t: "PROYECTO EN CONSTANTE CRECIMIENTO", c: "green" },
 ] as const;
 
-const HIGHLIGHT_COLOR_CLASS: Record<(typeof HIGHLIGHTS)[number]["c"], string> = {
-  magenta: styles.magenta,
-  cyan: styles.cyan,
-  green: styles.green,
-};
+const HIGHLIGHT_COLOR_CLASS: Record<(typeof HIGHLIGHTS)[number]["c"], string> =
+  {
+    magenta: styles.magenta,
+    cyan: styles.cyan,
+    green: styles.green,
+  };
 
 export default function About() {
   useReveal();
@@ -97,9 +110,10 @@ export default function About() {
         <div className={`${styles.kicker} pixel neon-yellow`}>▸ ACERCA DE</div>
         <h1 className={styles.aboutTitle}>ACERCA DE ARCADE VAULT</h1>
         <p className={styles.aboutMission}>
-          ARCADE VAULT nació del amor por los videojuegos clásicos. Nuestra misión es preservar y
-          celebrar los arcades que definieron una generación, haciéndolos accesibles para todos, en
-          cualquier lugar y sin costo.
+          ARCADE VAULT nació del amor por los videojuegos clásicos. Nuestra
+          misión es preservar y celebrar los arcades que definieron una
+          generación, haciéndolos accesibles para todos, en cualquier lugar y
+          sin costo.
         </p>
 
         <div className={styles.highlightRow}>
@@ -117,7 +131,10 @@ export default function About() {
       </section>
 
       {/* divider banner */}
-      <div className={`${styles.aboutDivider} ${styles.reveal}`} aria-hidden="true">
+      <div
+        className={`${styles.aboutDivider} ${styles.reveal}`}
+        aria-hidden="true"
+      >
         <div className={styles.divBar} />
         <div className={styles.divPixels}>
           {Array.from({ length: 24 }).map((_, i) => (
@@ -134,8 +151,8 @@ export default function About() {
             <div className={`${styles.kicker} pixel neon-cyan`}>▸ CONTACTO</div>
             <h2 className={styles.contactTitle}>CONTÁCTANOS</h2>
             <p className={styles.contactSub}>
-              ¿Tienes alguna sugerencia, quieres proponer un juego, o simplemente quieres saludar?
-              Escríbenos.
+              ¿Tienes alguna sugerencia, quieres proponer un juego, o
+              simplemente quieres saludar? Escríbenos.
             </p>
             <div className={styles.contactTips}>
               <div className={styles.tip}>
