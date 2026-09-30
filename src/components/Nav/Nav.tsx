@@ -12,6 +12,7 @@ export default function Nav() {
   const isHome = pathname === "/home";
   const isBiblioteca = pathname.startsWith("/juegos");
   const isSalon = pathname === "/salon";
+  const isAbout = pathname === "/about";
   const isLogin = pathname === "/login";
 
   const close = () => setOpen(false);
@@ -44,6 +45,12 @@ export default function Nav() {
             className={`${styles.link} ${isSalon ? styles.active : ""}`}
           >
             Salón de la Fama
+          </Link>
+          <Link
+            href="/about"
+            className={`${styles.link} ${isAbout ? styles.active : ""}`}
+          >
+            Acerca de
           </Link>
         </div>
 
@@ -87,6 +94,9 @@ export default function Nav() {
         </Link>
         <Link href="/salon" onClick={close} className={isSalon ? styles.active : undefined}>
           Salón de la Fama
+        </Link>
+        <Link href="/about" onClick={close} className={isAbout ? styles.active : undefined}>
+          Acerca de
         </Link>
         <Link href="/login" onClick={close} className={isLogin ? styles.active : undefined}>
           Iniciar Sesión
