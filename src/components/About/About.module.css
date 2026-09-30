@@ -139,3 +139,237 @@
   opacity: 1;
   transform: none;
 }
+
+/* ===== CONTACT ===== */
+.aboutContact {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 0 32px;
+}
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+.contactTitle {
+  font-family: var(--pixel);
+  font-size: clamp(22px, 3.5vw, 36px);
+  letter-spacing: 0.06em;
+  margin: 0;
+  color: var(--cyan);
+  text-shadow: 0 0 12px rgba(0, 245, 255, 0.4);
+}
+.contactSub {
+  color: var(--ink-dim);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 18px 0 24px;
+}
+.contactTips {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--pixel);
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 0.14em;
+}
+.tipLed {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+}
+.tipLed.y {
+  background: var(--yellow);
+  box-shadow: 0 0 6px var(--yellow);
+}
+.tipLed.m {
+  background: var(--magenta);
+  box-shadow: 0 0 6px var(--magenta);
+}
+
+/* ===== FORM ===== */
+.contactForm {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 28px;
+  position: relative;
+  transition: transform 80ms;
+}
+.contactForm::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed rgba(0, 245, 255, 0.15);
+  pointer-events: none;
+}
+.contactForm.shake {
+  animation: shake 0.4s;
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.field label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+.field input {
+  height: 44px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 0 12px;
+  outline: 0;
+  font-family: var(--mono);
+  transition:
+    border-color 140ms,
+    box-shadow 140ms;
+}
+.field textarea {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 12px;
+  outline: 0;
+  font-family: var(--mono);
+  color: var(--ink);
+  resize: vertical;
+  min-height: 110px;
+  width: 100%;
+  transition:
+    border-color 140ms,
+    box-shadow 140ms;
+}
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.35);
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--ink-faint);
+}
+.press:active {
+  transform: translateY(3px) scale(0.99);
+  box-shadow: 0 0 6px rgba(0, 245, 255, 0.2) inset;
+}
+.press:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* ===== TERMINAL (success / error) ===== */
+.terminalSuccess {
+  background: #000;
+  border: 1px solid var(--green);
+  box-shadow: 0 0 22px rgba(0, 255, 136, 0.25);
+  font-family: var(--mono);
+  overflow: hidden;
+}
+.terminalError {
+  border-color: #ff3060;
+  box-shadow: 0 0 22px rgba(255, 48, 96, 0.25);
+}
+.termBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #0a0a0f;
+  border-bottom: 1px solid var(--line);
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot.r {
+  background: #ff5f56;
+}
+.dot.y {
+  background: #ffbd2e;
+}
+.dot.g {
+  background: #27c93f;
+}
+.termTitle {
+  margin-left: 8px;
+  font-family: var(--pixel);
+  font-size: 9px;
+  color: var(--ink-faint);
+  letter-spacing: 0.14em;
+}
+.termBody {
+  padding: 18px 18px 22px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.line {
+  color: var(--green);
+}
+.prompt {
+  color: var(--cyan);
+  margin-right: 8px;
+}
+.dim {
+  color: var(--ink-dim);
+}
+.success {
+  margin-top: 12px;
+  color: var(--green);
+  text-shadow: 0 0 6px rgba(0, 255, 136, 0.45);
+  font-weight: 700;
+  white-space: pre-wrap;
+}
+.errorLine {
+  margin-top: 12px;
+  color: #ff3060;
+  text-shadow: 0 0 6px rgba(255, 48, 96, 0.45);
+  font-weight: 700;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.caret {
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
