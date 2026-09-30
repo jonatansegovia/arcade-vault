@@ -1,6 +1,6 @@
 # SPEC 03 — Página About y envío de correo de contacto (Resend)
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 02
 > **Date:** 2026-09-29
 > **Objective:** Implementar la página `/about` (Acerca de + Contacto) portada de `references/templates/home-about/about.jsx`, con envío real del formulario de contacto por correo usando la API de Resend.
