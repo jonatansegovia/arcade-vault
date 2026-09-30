@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { sendContactMessage } from "@/src/actions/contact";
 import styles from "./About.module.css";
 
 type Status = "idle" | "sending" | "sent" | "error";
+
+const SEND_ERROR_MESSAGE =
+  "No se pudo enviar el mensaje. Intenta de nuevo más tarde.";
 
 const EMPTY_FORM = { name: "", email: "", msg: "" };
 
@@ -26,13 +28,22 @@ export default function ContactForm() {
     }
 
     setStatus("sending");
-    const result = await sendContactMessage(form);
 
-    if (result.success) {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
       setSentName(form.name.trim());
       setStatus("sent");
-    } else {
-      setError(result.error ?? "No se pudo enviar el mensaje.");
+    } catch {
+      setError(SEND_ERROR_MESSAGE);
       setStatus("error");
     }
   };
