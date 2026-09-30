@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import ContactForm from "./ContactForm";
 import styles from "./About.module.css";
 
 function useReveal() {
@@ -125,6 +126,36 @@ export default function About() {
         </div>
         <div className={styles.divBar} />
       </div>
+
+      {/* CONTACT */}
+      <section className={`${styles.aboutContact} ${styles.reveal}`}>
+        <div className={styles.contactGrid}>
+          <div className={styles.contactIntro}>
+            <div className={`${styles.kicker} pixel neon-cyan`}>▸ CONTACTO</div>
+            <h2 className={styles.contactTitle}>CONTÁCTANOS</h2>
+            <p className={styles.contactSub}>
+              ¿Tienes alguna sugerencia, quieres proponer un juego, o simplemente quieres saludar?
+              Escríbenos.
+            </p>
+            <div className={styles.contactTips}>
+              <div className={styles.tip}>
+                <span className={styles.tipLed} />
+                RESPUESTA EN 24-48H
+              </div>
+              <div className={styles.tip}>
+                <span className={`${styles.tipLed} ${styles.y}`} />
+                SUGERENCIAS BIENVENIDAS
+              </div>
+              <div className={styles.tip}>
+                <span className={`${styles.tipLed} ${styles.m}`} />
+                SIN SPAM, JAMÁS
+              </div>
+            </div>
+          </div>
+
+          <ContactForm />
+        </div>
+      </section>
     </div>
   );
 }
