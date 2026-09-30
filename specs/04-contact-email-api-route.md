@@ -1,6 +1,6 @@
 # SPEC 04 — Migrar el envío de correo de contacto a un API Route
 
-> **Status:** Approved  
+> **Status:** Implemented  
 > **Depends on:** SPEC 03
 > **Date:** 2026-09-29
 > **Objective:** Reemplazar la Server Action `sendContactMessage` por un Route Handler `POST /api/contact` que concentre todo el envío por Resend en el servidor, sin exponer al cliente secretos, destinatario ni errores del proveedor.
@@ -85,19 +85,19 @@ Variables de entorno (solo servidor, sin prefijo `NEXT_PUBLIC_`):
 
 ## Acceptance criteria
 
-- [ ] `npm run build` termina sin errores.
-- [ ] `src/actions/contact.ts` no existe y ningún archivo referencia `sendContactMessage`.
-- [ ] `POST /api/contact` con body válido y variables configuradas responde 200 `{ success: true }` y llega el correo a `CONTACT_TO_EMAIL` con `reply_to` igual al correo ingresado.
-- [ ] `POST /api/contact` con algún campo vacío responde 400 sin enviar correo.
-- [ ] `POST /api/contact` con body que no es JSON válido responde 400.
-- [ ] Con `RESEND_API_KEY` inválida o ausente responde 500 con el mensaje genérico; el body de la respuesta no contiene texto del error de Resend.
-- [ ] Con `CONTACT_TO_EMAIL` ausente responde 500 con el mensaje genérico y no envía correo.
-- [ ] El detalle del fallo aparece en la consola del servidor (`console.error`).
-- [ ] El código fuente no contiene el correo `jsegovia.ush@gmail.com` (búsqueda en `src/` y `app/`).
-- [ ] En el navegador, la pestaña Network muestra una llamada a `/api/contact` al enviar el formulario, y ni la API key ni el destinatario aparecen en request, response ni bundle del cliente.
-- [ ] Enviar el formulario con campos vacíos sigue disparando el shake sin llamar a `/api/contact`.
-- [ ] Éxito muestra el bloque "terminal success"; fallo muestra la línea de error y "REINTENTAR" conserva los datos escritos.
-- [ ] `.env.example` documenta `RESEND_API_KEY` y `CONTACT_TO_EMAIL`.
+- [x] `npm run build` termina sin errores.
+- [x] `src/actions/contact.ts` no existe y ningún archivo referencia `sendContactMessage`.
+- [x] `POST /api/contact` con body válido y variables configuradas responde 200 `{ success: true }` y llega el correo a `CONTACT_TO_EMAIL` con `reply_to` igual al correo ingresado.
+- [x] `POST /api/contact` con algún campo vacío responde 400 sin enviar correo.
+- [x] `POST /api/contact` con body que no es JSON válido responde 400.
+- [x] Con `RESEND_API_KEY` inválida o ausente responde 500 con el mensaje genérico; el body de la respuesta no contiene texto del error de Resend.
+- [x] Con `CONTACT_TO_EMAIL` ausente responde 500 con el mensaje genérico y no envía correo.
+- [x] El detalle del fallo aparece en la consola del servidor (`console.error`).
+- [x] El código fuente no contiene el correo `jsegovia.ush@gmail.com` (búsqueda en `src/` y `app/`).
+- [x] En el navegador, la pestaña Network muestra una llamada a `/api/contact` al enviar el formulario, y ni la API key ni el destinatario aparecen en request, response ni bundle del cliente.
+- [x] Enviar el formulario con campos vacíos sigue disparando el shake sin llamar a `/api/contact`.
+- [x] Éxito muestra el bloque "terminal success"; fallo muestra la línea de error y "REINTENTAR" conserva los datos escritos.
+- [x] `.env.example` documenta `RESEND_API_KEY` y `CONTACT_TO_EMAIL`.
 
 ---
 
