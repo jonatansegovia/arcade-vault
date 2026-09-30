@@ -15,7 +15,7 @@ export default function ContactForm() {
   const [error, setError] = useState("");
   const [shake, setShake] = useState(false);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (status === "sending") return;
