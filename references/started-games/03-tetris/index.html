@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tetris</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <button id="theme-toggle-btn" class="theme-toggle" type="button" aria-pressed="false" title="Cambiar tema">🌙 Dark</button>
+    <h1 class="game-title">TETRIS</h1>
+    <div class="game-container">
+      <canvas id="board" width="300" height="600"></canvas>
+
+      <aside class="panel">
+        <div class="panel-section">
+          <span class="label">SCORE</span>
+          <span class="value" id="score">0</span>
+        </div>
+        <div class="panel-section">
+          <span class="label">LINES</span>
+          <span class="value" id="lines">0</span>
+        </div>
+        <div class="panel-section">
+          <span class="label">LEVEL</span>
+          <span class="value" id="level">1</span>
+        </div>
+
+        <div class="panel-section">
+          <span class="label">NEXT</span>
+          <canvas id="next-canvas" width="120" height="120"></canvas>
+        </div>
+
+        <div class="panel-section controls">
+          <span class="label">CONTROLS</span>
+          <ul>
+            <li><kbd>←</kbd><kbd>→</kbd> mover</li>
+            <li><kbd>↑</kbd> rotar</li>
+            <li><kbd>↓</kbd> bajar</li>
+            <li><kbd>Space</kbd> caída</li>
+            <li><kbd>P</kbd> pausa</li>
+          </ul>
+        </div>
+
+        <div class="panel-section skins">
+          <span class="label">SKINS</span>
+          <div class="skins-grid">
+            <button class="skin-btn active" data-skin="retro" title="Retro">🎮</button>
+            <button class="skin-btn" data-skin="neon" title="Neon">⚡</button>
+            <button class="skin-btn" data-skin="pastel" title="Pastel">🎨</button>
+            <button class="skin-btn" data-skin="pixel" title="Pixel">📦</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div id="overlay" class="overlay hidden">
+      <div class="overlay-box">
+        <p id="overlay-title">GAME OVER</p>
+        <p id="overlay-score"></p>
+
+        <div id="name-input-div" class="name-input-div hidden">
+          <input id="name-input" type="text" placeholder="Tu nombre" maxlength="20" class="name-input">
+          <button id="name-submit-btn" class="name-submit-btn">Guardar</button>
+        </div>
+
+        <div id="records-container" class="records-container">
+          <h3 class="records-title">🏆 Top 5 Records</h3>
+          <ul id="records-list" class="records-list"></ul>
+          <div class="records-footer">
+            <span id="record-count" class="record-count">0 registros</span>
+            <button id="reset-records-btn" class="reset-records-btn" onclick="resetRecords()">🗑️ Limpiar</button>
+          </div>
+        </div>
+
+        <button id="restart-btn">Reiniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

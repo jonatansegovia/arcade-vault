@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); printf '%s' \"$input\" | node \"$CLAUDE_PROJECT_DIR/.claude/hooks/format.mjs\"; printf '%s' \"$input\" | node \"$CLAUDE_PROJECT_DIR/.claude/hooks/format-lint.mjs\"",
+            "timeout": 90,
+            "statusMessage": "Limpiando, ESLint y Prettier..."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
-import GameCard from "@/src/components/GameCard/GameCard";
-import { CATEGORIES, GAMES } from "@/src/data/games";
-import styles from "./page.module.css";
+import { useMemo, useState } from 'react';
+import GameCard from '@/src/components/GameCard/GameCard';
+import { CATEGORIES, GAMES } from '@/src/data/games';
+import styles from './page.module.css';
 
 export default function Home() {
-  const [q, setQ] = useState("");
-  const [cat, setCat] = useState<(typeof CATEGORIES)[number]>("TODOS");
+  const [q, setQ] = useState('');
+  const [cat, setCat] = useState<(typeof CATEGORIES)[number]>('TODOS');
 
   const filtered = useMemo(() => {
     return GAMES.filter(
       (g) =>
-        (cat === "TODOS" || g.cat === cat) &&
+        (cat === 'TODOS' || g.cat === cat) &&
         g.title.toLowerCase().includes(q.toLowerCase()),
     );
   }, [q, cat]);
@@ -40,7 +40,7 @@ export default function Home() {
             <button
               key={c}
               type="button"
-              className={`chip ${cat === c ? "active" : ""}`}
+              className={`chip ${cat === c ? 'active' : ''}`}
               onClick={() => setCat(c)}
             >
               {c}
@@ -55,7 +55,9 @@ export default function Home() {
         ))}
         {filtered.length === 0 && (
           <div className={styles.empty}>
-            <div className={`pixel ${styles.emptyTitle}`}>NO HAY RESULTADOS</div>
+            <div className={`pixel ${styles.emptyTitle}`}>
+              NO HAY RESULTADOS
+            </div>
             <div>Intenta otra búsqueda o categoría.</div>
           </div>
         )}
