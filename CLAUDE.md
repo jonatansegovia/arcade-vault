@@ -22,6 +22,7 @@ Check whether these skills are installed before starting feature work; if not, i
 - App Router only (`app/` directory) — no `pages/` directory exists.
 - Path alias `@/*` maps to the project root (`tsconfig.json`).
 - Styling is Tailwind CSS v4 via `@tailwindcss/postcss` (see `postcss.config.mjs`), not a `tailwind.config.js`-based v3 setup.
+- Supabase: `src/lib/supabase/client.ts` (browser, `createClient()`) and `src/lib/supabase/server.ts` (server, `await createClient()` — `cookies()` is async in Next 16). Both read `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` from `.env.local` (placeholders in `.env.example`). Connection check: `GET /api/health/supabase` → 200 `{ ok: true }` or 503 `{ ok: false, error }`. `supabase/migrations/` is empty; no tables, Auth or `proxy.ts` yet.
 - The `AGENTS.md` block at the repo root is auto-generated/re-added by `next dev` (see `node_modules/next/dist/server/lib/generate-agent-files.js`). Commit it as-is rather than stripping it.
 
 ## Skills
