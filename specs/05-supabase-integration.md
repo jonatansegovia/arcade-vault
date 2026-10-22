@@ -1,6 +1,6 @@
 # SPEC 01 — Integración base de Supabase
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** ninguna
 > **Date:** 2026-10-22
 > **Objective:** Dejar Arcade Vault conectado a un proyecto Supabase existente mediante clientes de navegador y servidor, variables de entorno y una ruta de verificación, sin tablas ni cambios de UI.
@@ -62,16 +62,16 @@ Convenciones:
 
 ## Criterios de aceptación
 
-- [ ] `package.json` lista `@supabase/supabase-js` y `@supabase/ssr` como dependencias.
-- [ ] `.env.example` contiene `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` con valor `XXXXX`.
-- [ ] `.env.local` contiene ambas variables con valores reales y no aparece en `git status`.
-- [ ] Existen `src/lib/supabase/client.ts`, `src/lib/supabase/server.ts` y `supabase/migrations/.gitkeep`.
-- [ ] Con `npm run dev`, `GET /api/health/supabase` responde 200 y `{ "ok": true }`.
-- [ ] Con la URL de Supabase alterada, `GET /api/health/supabase` responde 503 y `{ "ok": false, ... }`.
-- [ ] Con `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` ausente, la ruta responde 503 con un mensaje que nombra la variable que falta.
-- [ ] `npm run build` y `npm run lint` terminan sin errores.
-- [ ] Ninguna página existente (`/home`, `/juegos`, `/salon`, `/login`) cambia su comportamiento.
-- [ ] Ningún archivo del repo contiene la clave real ni la contraseña de la base de datos.
+- [x] `package.json` lista `@supabase/supabase-js` y `@supabase/ssr` como dependencias.
+- [x] `.env.example` contiene `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` con valor `XXXXX`.
+- [x] `.env.local` contiene ambas variables con valores reales y no aparece en `git status`.
+- [x] Existen `src/lib/supabase/client.ts`, `src/lib/supabase/server.ts` y `supabase/migrations/.gitkeep`.
+- [x] Con `npm run dev`, `GET /api/health/supabase` responde 200 y `{ "ok": true }`.
+- [x] Con la URL de Supabase alterada, `GET /api/health/supabase` responde 503 y `{ "ok": false, ... }`.
+- [x] Con `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` ausente, la ruta responde 503 con un mensaje que nombra la variable que falta.
+- [x] `npm run build` y `npm run lint` terminan sin errores.
+- [x] Ninguna página existente (`/home`, `/juegos`, `/salon`, `/login`) cambia su comportamiento.
+- [x] Ningún archivo del repo contiene la clave real ni la contraseña de la base de datos.
 
 ---
 
