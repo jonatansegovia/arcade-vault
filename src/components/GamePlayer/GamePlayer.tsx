@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Game } from "@/src/data/games";
-import AsteroidsCanvas from "./AsteroidsCanvas";
+import AsteroidsCanvas, { type AsteroidsHandle } from "./AsteroidsCanvas";
 import styles from "./GamePlayer.module.css";
 
 export default function GamePlayer({ game }: { game: Game }) {
@@ -15,6 +15,7 @@ export default function GamePlayer({ game }: { game: Game }) {
   const [over, setOver] = useState(false);
   const [name, setName] = useState("INVITADO");
   const [saved, setSaved] = useState(false);
+  const engineRef = useRef<AsteroidsHandle>(null);
 
   useEffect(() => {
     if (isAsteroids || over || paused) return;
@@ -30,10 +31,26 @@ export default function GamePlayer({ game }: { game: Game }) {
     return () => clearInterval(t);
   }, [isAsteroids, over, paused]);
 
-  const endGame = () => setOver(true);
+  const endGame = () => {
+    if (isAsteroids) engineRef.current?.end();
+    else setOver(true);
+  };
+  const togglePause = () => {
+    const next = !paused;
+    setPaused(next);
+    if (isAsteroids) {
+      if (next) engineRef.current?.pause();
+      else engineRef.current?.resume();
+    }
+  };
   const restart = () => {
-    setScore(0);
-    setLevel(1);
+    if (isAsteroids) {
+      engineRef.current?.restart(); // re-emite score, vidas y nivel iniciales
+    } else {
+      setScore(0);
+      setLives(3);
+      setLevel(1);
+    }
     setPaused(false);
     setOver(false);
     setSaved(false);
@@ -63,7 +80,7 @@ export default function GamePlayer({ game }: { game: Game }) {
           </div>
         </div>
         <div className={styles.hudActions}>
-          <button type="button" className="btn yellow" onClick={() => setPaused((p) => !p)}>
+          <button type="button" className="btn yellow" onClick={togglePause}>
             {paused ? "REANUDAR" : "PAUSA"}
           </button>
           <button type="button" className="btn magenta" onClick={endGame}>
@@ -79,10 +96,14 @@ export default function GamePlayer({ game }: { game: Game }) {
         <div className={styles.crtScreen}>
           {isAsteroids ? (
             <AsteroidsCanvas
+              ref={engineRef}
               onScore={setScore}
               onLives={setLives}
               onLevel={setLevel}
-              onGameOver={() => {}}
+              onGameOver={(finalScore) => {
+                setScore(finalScore);
+                setOver(true);
+              }}
             />
           ) : (
             <div className={styles.arena}>

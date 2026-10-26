@@ -61,7 +61,6 @@ export default function AsteroidsCanvas({
       ref={canvasRef}
       width={800}
       height={600}
-      style={{ display: 'block', width: '100%', height: '100%' }}
     />
   );
 }
