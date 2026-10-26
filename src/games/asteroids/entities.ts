@@ -2,8 +2,12 @@ import {
   H,
   LARGE_ASTEROID_SHAPE,
   LARGE_SHAPE_CHANCE,
+  NOVA_BOMB_COLOR,
+  NOVA_BOMB_TTL,
   RADII,
   SPEEDS,
+  TRIPLE_SHOT_COLOR,
+  TRIPLE_SHOT_TTL,
   W,
   rand,
   randInt,
@@ -137,6 +141,182 @@ export class Asteroid {
       ctx.lineTo(this.verts[i][0], this.verts[i][1]);
     ctx.closePath();
     ctx.stroke();
+    ctx.restore();
+  }
+}
+
+// ── Ship ──────────────────────────────────────────────────────────────────────
+export type Keys = Record<string, boolean | undefined>;
+
+export class Ship {
+  x = W / 2;
+  y = H / 2;
+  angle = -Math.PI / 2;
+  vx = 0;
+  vy = 0;
+  radius = 12;
+  thrusting = false;
+  invincible = 3;
+  shootCooldown = 0;
+  dead = false;
+  tripleTimer = 0;
+  hasNovaBomb = false;
+
+  reset(): void {
+    this.x = W / 2;
+    this.y = H / 2;
+    this.angle = -Math.PI / 2;
+    this.vx = 0;
+    this.vy = 0;
+    this.radius = 12;
+    this.thrusting = false;
+    this.invincible = 3;
+    this.shootCooldown = 0;
+    this.dead = false;
+    this.tripleTimer = 0;
+  }
+
+  update(dt: number, keys: Keys): void {
+    if (this.dead) return;
+    if (this.invincible > 0) this.invincible -= dt;
+    if (this.shootCooldown > 0) this.shootCooldown -= dt;
+    if (this.tripleTimer > 0) this.tripleTimer -= dt;
+
+    const ROT = 3.5; // rad/s
+    const THRUST = 260; // px/s²
+    const DRAG = 0.987;
+
+    if (keys["ArrowLeft"]) this.angle -= ROT * dt;
+    if (keys["ArrowRight"]) this.angle += ROT * dt;
+
+    this.thrusting = !!keys["ArrowUp"];
+    if (this.thrusting) {
+      this.vx += Math.cos(this.angle) * THRUST * dt;
+      this.vy += Math.sin(this.angle) * THRUST * dt;
+    }
+
+    this.vx *= DRAG;
+    this.vy *= DRAG;
+    this.x = wrap(this.x + this.vx * dt, W);
+    this.y = wrap(this.y + this.vy * dt, H);
+  }
+
+  tryShoot(): Bullet[] {
+    if (this.shootCooldown > 0 || this.dead) return [];
+    this.shootCooldown = 0.2;
+    const NOSE = 21;
+    const ox = this.x + Math.cos(this.angle) * NOSE;
+    const oy = this.y + Math.sin(this.angle) * NOSE;
+    const result = [new Bullet(ox, oy, this.angle)];
+    if (this.tripleTimer > 0) {
+      const SPREAD = 0.22;
+      result.push(new Bullet(ox, oy, this.angle - SPREAD));
+      result.push(new Bullet(ox, oy, this.angle + SPREAD));
+    }
+    return result;
+  }
+
+  draw(ctx: CanvasRenderingContext2D): void {
+    if (this.dead) return;
+    // Parpadeo durante invencibilidad de reaparición
+    if (this.invincible > 0 && Math.floor(this.invincible * 8) % 2 === 0)
+      return;
+
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 1.5;
+    ctx.lineJoin = "round";
+
+    // Silueta clásica: triángulo con muesca trasera
+    ctx.beginPath();
+    ctx.moveTo(20, 0); // nariz
+    ctx.lineTo(-12, -9); // ala izquierda
+    ctx.lineTo(-7, 0); // muesca trasera
+    ctx.lineTo(-12, 9); // ala derecha
+    ctx.closePath();
+    ctx.stroke();
+
+    // Llama del propulsor
+    if (this.thrusting && Math.random() > 0.35) {
+      ctx.beginPath();
+      ctx.moveTo(-8, -4);
+      ctx.lineTo(-8 - rand(6, 14), 0);
+      ctx.lineTo(-8, 4);
+      ctx.strokeStyle = "rgba(255, 130, 0, 0.85)";
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+}
+
+// ── Power-Up (Disparo Triple / Bomba Nova) ────────────────────────────────────
+export type PowerUpKind = "triple" | "nova";
+
+export class PowerUp {
+  x: number;
+  y: number;
+  kind: PowerUpKind;
+  radius = 12;
+  ttl: number;
+  life: number;
+  rot = rand(0, Math.PI * 2);
+  rotSpeed = rand(0.6, 1.4) * (Math.random() < 0.5 ? 1 : -1);
+  vx: number;
+  vy: number;
+  dead = false;
+
+  constructor(x: number, y: number, kind: PowerUpKind = "triple") {
+    this.x = x;
+    this.y = y;
+    this.kind = kind;
+    this.ttl = kind === "nova" ? NOVA_BOMB_TTL : TRIPLE_SHOT_TTL;
+    this.life = this.ttl;
+    const angle = rand(0, Math.PI * 2);
+    const speed = rand(20, 45);
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+  }
+
+  update(dt: number): void {
+    this.x = wrap(this.x + this.vx * dt, W);
+    this.y = wrap(this.y + this.vy * dt, H);
+    this.rot += this.rotSpeed * dt;
+    this.ttl -= dt;
+    if (this.ttl <= 0) this.dead = true;
+  }
+
+  draw(ctx: CanvasRenderingContext2D): void {
+    if (this.ttl < 3 && Math.floor(this.ttl * 6) % 2 === 0) return;
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rot);
+    if (this.kind === "nova") {
+      ctx.fillStyle = NOVA_BOMB_COLOR;
+      ctx.shadowColor = NOVA_BOMB_COLOR;
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      ctx.arc(0, 0, 9, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(-6, 0);
+      ctx.lineTo(6, 0);
+      ctx.moveTo(0, -6);
+      ctx.lineTo(0, 6);
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = TRIPLE_SHOT_COLOR;
+      ctx.shadowColor = TRIPLE_SHOT_COLOR;
+      ctx.shadowBlur = 8;
+      ctx.font = "bold 16px monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("x3", 0, 0);
+    }
     ctx.restore();
   }
 }
