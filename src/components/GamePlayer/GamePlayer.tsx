@@ -1,21 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Game } from "@/src/data/games";
+import AsteroidsCanvas, { type AsteroidsHandle } from "./AsteroidsCanvas";
 import styles from "./GamePlayer.module.css";
 
 export default function GamePlayer({ game }: { game: Game }) {
+  const isAsteroids = game.id === "asteroids";
   const [score, setScore] = useState(0);
-  const [lives] = useState(3);
+  const [lives, setLives] = useState(3);
   const [level, setLevel] = useState(1);
   const [paused, setPaused] = useState(false);
   const [over, setOver] = useState(false);
   const [name, setName] = useState("INVITADO");
   const [saved, setSaved] = useState(false);
+  const engineRef = useRef<AsteroidsHandle>(null);
 
   useEffect(() => {
-    if (over || paused) return;
+    if (isAsteroids || over || paused) return;
     const t = setInterval(() => {
       setScore((s) => {
         const next = s + Math.floor(10 + Math.random() * 90);
@@ -26,12 +29,28 @@ export default function GamePlayer({ game }: { game: Game }) {
       });
     }, 220);
     return () => clearInterval(t);
-  }, [over, paused]);
+  }, [isAsteroids, over, paused]);
 
-  const endGame = () => setOver(true);
+  const endGame = () => {
+    if (isAsteroids) engineRef.current?.end();
+    else setOver(true);
+  };
+  const togglePause = () => {
+    const next = !paused;
+    setPaused(next);
+    if (isAsteroids) {
+      if (next) engineRef.current?.pause();
+      else engineRef.current?.resume();
+    }
+  };
   const restart = () => {
-    setScore(0);
-    setLevel(1);
+    if (isAsteroids) {
+      engineRef.current?.restart(); // re-emite score, vidas y nivel iniciales
+    } else {
+      setScore(0);
+      setLives(3);
+      setLevel(1);
+    }
     setPaused(false);
     setOver(false);
     setSaved(false);
@@ -61,7 +80,7 @@ export default function GamePlayer({ game }: { game: Game }) {
           </div>
         </div>
         <div className={styles.hudActions}>
-          <button type="button" className="btn yellow" onClick={() => setPaused((p) => !p)}>
+          <button type="button" className="btn yellow" onClick={togglePause}>
             {paused ? "REANUDAR" : "PAUSA"}
           </button>
           <button type="button" className="btn magenta" onClick={endGame}>
@@ -75,13 +94,26 @@ export default function GamePlayer({ game }: { game: Game }) {
 
       <div className={styles.crt}>
         <div className={styles.crtScreen}>
-          <div className={styles.arena}>
-            <div className={styles.gridFloor} />
-            <div className={`${styles.enemy} ${styles.e1}`} />
-            <div className={`${styles.enemy} ${styles.e2}`} />
-            <div className={`${styles.enemy} ${styles.e3}`} />
-            <div className={styles.playerShip} />
-          </div>
+          {isAsteroids ? (
+            <AsteroidsCanvas
+              ref={engineRef}
+              onScore={setScore}
+              onLives={setLives}
+              onLevel={setLevel}
+              onGameOver={(finalScore) => {
+                setScore(finalScore);
+                setOver(true);
+              }}
+            />
+          ) : (
+            <div className={styles.arena}>
+              <div className={styles.gridFloor} />
+              <div className={`${styles.enemy} ${styles.e1}`} />
+              <div className={`${styles.enemy} ${styles.e2}`} />
+              <div className={`${styles.enemy} ${styles.e3}`} />
+              <div className={styles.playerShip} />
+            </div>
+          )}
           {paused && (
             <div className={styles.crtContent} style={{ background: "rgba(0,0,0,0.6)", zIndex: 5 }}>
               <div>
